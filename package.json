@@ -1,0 +1,24 @@
+{
+  "name": "womnz",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "serve": "shopify theme serve",
+    "sass": "node-sass --watch --recursive  sass/global.scss assets/application.css.liquid"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Diegoalbag/Womnz-shopify-theme.git"
+  },
+  "author": "Diego Alba",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Diegoalbag/Womnz-shopify-theme/issues"
+  },
+  "homepage": "https://github.com/Diegoalbag/Womnz-shopify-theme#readme",
+  "dependencies": {
+    "node-sass": "^6.0.1"
+  }
+}
