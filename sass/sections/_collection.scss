@@ -1,0 +1,27 @@
+.collection{
+    height: max-content;
+    &-card{
+        height: 50rem;
+        min-height: 400px;
+        width: 40rem;
+        max-width: 400px;
+        min-width: 35rem;
+        overflow: hidden;
+        &_content{
+            position: relative;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            transition: all .2s;
+            &:hover{
+                transform: scale(1.2);
+                @include respond(tab-land){
+                    transform: none;
+                }
+            }
+            @include respond(tab-land){
+                margin: 0 !important;
+            }
+        }
+    }
+}

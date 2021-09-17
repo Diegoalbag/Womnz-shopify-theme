@@ -1,0 +1,66 @@
+<div class="navbar container-fluid position-absolute justify-content-between">
+    {% if section.settings.logo %}
+        <figure class="navbar-logo mx-5">
+        <img class="" src="{{ section.settings.logo | img_url: '500x' }}" />
+        </figure>
+    {% endif %}
+
+    <div class="navbar-links d-none d-md-block">
+    {% for link in linklists.main-menu.links %}
+        {% assign child_list_handle = link.title | handleize %}
+        {% if linklists[child_list_handle].links != blank %}
+        <a class="my-5" href="{{ link.url }}">{{ link.title }}</a>
+        [{% for childlink in linklists[child_list_handle].links %}
+            <a href="{{ childlink.url }}">{{ childlink.title | escape }}</a>
+        {% endfor %}]
+        {% else %}
+        <a class="mx-3 text-white text-uppercase" href="{{ link.url }}">{{ link.title }}</a>
+        {% endif %}
+    {% endfor %}
+    </div>
+
+    <div class="navbar-icons d-flex align-items-center">
+        <i search-icon class="fas fa-search text-white mx-5 d-none d-md-block"></i>
+        <i class="fas fa-user text-white mx-5 d-none d-md-block"></i>
+        <i class="far fa-heart text-white mx-5 d-none d-md-block"></i>
+        <i class="fas fa-ellipsis-h text-white mx-5 d-md-none"></i>
+    </div>
+    {% comment %} {% if section.settings.logo %}
+        <figure class="navbar-logo">
+        <img src="{{ section.settings.logo | img_url }}" />
+        </figure>
+    {% endif %}
+
+    <div class="navbar-links">
+    {% for link in linklists.main-menu.links %}
+        {% assign child_list_handle = link.title | handleize %}
+        {% if linklists[child_list_handle].links != blank %}
+        <a href="{{ link.url }}">{{ link.title }}</a>
+        [{% for childlink in linklists[child_list_handle].links %}
+            <a href="{{ childlink.url }}">{{ childlink.title | escape }}</a>
+        {% endfor %}]
+        {% else %}
+        <a href="{{ link.url }}">{{ link.title }}</a>
+        {% endif %}
+    {% endfor %}
+    </div>
+
+    <div class="navbar-icons">
+        <i search-icon class="fas fa-search"></i>
+        <i class="fas fa-user"></i>
+        <i class="far fa-heart"></i>
+    </div> {% endcomment %}
+</div>
+
+{% schema %}
+    {
+        "name": "Navbar",
+        "settings": [
+            {
+            "type": "image_picker",
+            "id": "logo",
+            "label": "Logo"
+            }
+        ]
+    }
+{% endschema %}

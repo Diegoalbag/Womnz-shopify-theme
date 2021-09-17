@@ -1,0 +1,39 @@
+<div id="collection" class="collection container-fluid py-5 d-flex justify-content-center">
+    <div class="row d-flex justify-content-center">
+        {% for collection in collections %}
+            <div @click="goTo('{{collection.url}}')" class="collection-card col-12 col-sm-4 col-md-4 col-lg-4 my-5 mx-0">
+                <div class="collection-card_content h-100 d-flex justify-content-center align-items-center" style="background-image: url('{{collection.featured_image | img_url: '500x'}}');">
+                    <span class="text-white text-uppercase h1">{{collection.title}}</span>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+<script>
+const Collections = {
+  data() {
+    return {
+      counter: 0
+    }
+  },
+  methods: {
+      goTo(collectionUrl){
+        window.location.href = collectionUrl;
+      }
+  }
+}
+Vue.createApp(Collections).mount('#collection');
+</script>
+
+{% schema %}
+    {
+        "name": "Collections",
+        "settings": [],
+        "presets": [
+            {
+                "name": "Collections"
+            }
+        ]
+    }
+{% endschema %}
