@@ -1,0 +1,85 @@
+<div id="FeaturedProducts" class="FeaturedProducts d-flex justify-content-center bg-white">
+    {% comment %} <div class="row d-flex justify-content-center h-100">
+        <div v-for="(product, index) in products.splice(0, 3)" :key="index" class="col-12 border border-primary d-flex justify-content-center">
+            <div class="Product d-flex flex-column justify-content-center">
+                <figure class="Product-image h-75">
+                    <img class="h-100 w-100 shadow" :src="product.images[0]"/>
+                </figure>
+                <h2 v-html="product.title" class="text-black"></h2>
+                <p v-html="product.minPrice" class="text-black h3 text-muted"></p>
+            </div>
+        </div>
+    </div> {% endcomment %}
+        {% comment %} <div class="d-flex justify-content-center">
+            <div class="Product d-flex flex-column justify-content-center">
+                <figure class="Product-image h-75">
+                    <img class="h-100 w-100 shadow"/>
+                </figure>
+                <h2 class="text-black"></h2>
+                <p class="text-black h3 text-muted"></p>
+            </div>
+        </div> {% endcomment %}
+        <div class="FeaturedProducts-slider">
+            <div v-for="(product, index) in products.splice(0, 4)" :key="index" class="FeaturedProducts-slider__slide d-flex justify-content-center mx-5">
+                <div class="Product d-flex flex-column justify-content-center">
+                    <figure class="Product-image h-75">
+                        <img class="h-100 w-100 shadow" :src="product.images[0]"/>
+                    </figure>
+                    <h2 v-html="product.title" class="text-black"></h2>
+                    <p v-html="product.minPrice" class="text-black h3 text-muted"></p>
+                </div>
+            </div>
+        </div>
+</div>
+
+<script>
+const { createApp, ref, computed, watch, onMounted} = Vue;
+
+const FeaturedProducts = {
+    setup(){
+        let products = ref(
+            [
+                {% assign collection = section.settings.linked_collection %}
+                {% for product in collection.products %}
+                    {
+                        title: '{{product.title}}',
+                        id: {{product.id}}, 
+                        images: [
+                            {% for image in product.images %}
+                            '{{ image.src | product_img_url: 'medium', scale: 2}}',
+                            {% endfor %}
+                        ],
+                        minPrice: '{{product.price_min | money}}'
+                    },
+                {% endfor %}
+            ]
+        );
+
+        onMounted(() => {
+            console.log(products.value);
+        })
+
+        return{
+            products
+        }
+    },
+}
+Vue.createApp(FeaturedProducts).mount('#FeaturedProducts');
+</script>
+{% schema %}
+    {
+        "name": "Featured Products",
+        "settings": [
+            {
+                "type": "collection",
+                "id": "linked_collection",
+                "label": "Linked collection"
+            }   
+        ], 
+        "presets": [
+            {
+                "name": "Featured Products"
+            }
+        ]
+    }
+{% endschema %}
