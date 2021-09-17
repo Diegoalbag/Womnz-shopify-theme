@@ -1,0 +1,30 @@
+.carousel-content{
+    height: 100%;
+    width: 100%;
+    top: 0;
+    padding: 12rem;
+    &_topLeft{
+        justify-content: flex-start;
+        align-items: flex-start;
+    }
+    &_topRight{
+        justify-content: flex-end;
+        align-items: flex-start;
+    }
+    &_bottomLeft{
+        justify-content: flex-start;
+        align-items: flex-end;
+    }
+    &_bottomRight{
+        justify-content: flex-end;
+        align-items: flex-end;
+    }
+    &_center{
+        justify-content: center;
+        align-items: flex-end;
+    }
+    &_title{
+        font-size: 10vw;
+        white-space: nowrap;
+    }
+}

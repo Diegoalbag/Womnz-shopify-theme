@@ -1,2 +1,180 @@
-// Put your styles in this file.
-// Note: "@import" rules aren’t supported.
+/*
+0 - 600px:      Phone
+600 - 900px:    Tablet portrait
+900 - 1200px:   Tablet landscape
+[1200 - 1800] is where our normal styles apply
+1800px + :      Big desktop
+
+$breakpoint arguement choices:
+- phone
+- tab-port
+- tab-land
+- big-desktop
+
+ORDER: Base + typography > general layout + grid > page layout > components
+
+1em = 16px
+*/
+.navbar {
+  height: 8rem;
+  border-bottom: 1px white solid;
+  z-index: 1;
+  backdrop-filter: blur(5px); }
+  @media only screen and (max-width: 56.25em) {
+    .navbar {
+      height: 15rem; } }
+  .navbar-logo {
+    height: 100%;
+    width: fit-content;
+    margin: 0; }
+    .navbar-logo img {
+      height: 100%;
+      margin: 0; }
+  .navbar-links a {
+    font-size: 2rem; }
+  .navbar-icons i {
+    font-size: 2.5rem; }
+    .navbar-icons i:hover {
+      cursor: pointer; }
+    .navbar-icons i:last-child {
+      font-size: 4rem; }
+      @media only screen and (max-width: 56.25em) {
+        .navbar-icons i:last-child {
+          font-size: 9rem; } }
+
+.carousel-content {
+  height: 100%;
+  width: 100%;
+  top: 0;
+  padding: 12rem; }
+  .carousel-content_topLeft {
+    justify-content: flex-start;
+    align-items: flex-start; }
+  .carousel-content_topRight {
+    justify-content: flex-end;
+    align-items: flex-start; }
+  .carousel-content_bottomLeft {
+    justify-content: flex-start;
+    align-items: flex-end; }
+  .carousel-content_bottomRight {
+    justify-content: flex-end;
+    align-items: flex-end; }
+  .carousel-content_center {
+    justify-content: center;
+    align-items: flex-end; }
+  .carousel-content_title {
+    font-size: 10vw;
+    white-space: nowrap; }
+
+.collection {
+  height: max-content; }
+  .collection-card {
+    height: 50rem;
+    min-height: 400px;
+    width: 40rem;
+    max-width: 400px;
+    min-width: 35rem;
+    overflow: hidden; }
+    .collection-card_content {
+      position: relative;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      transition: all .2s; }
+      .collection-card_content:hover {
+        transform: scale(1.2); }
+        @media only screen and (max-width: 75em) {
+          .collection-card_content:hover {
+            transform: none; } }
+      @media only screen and (max-width: 75em) {
+        .collection-card_content {
+          margin: 0 !important; } }
+
+.FeaturedProducts {
+  height: min-content;
+  padding: 0 2rem;
+  overflow: hidden; }
+  .FeaturedProducts-slider {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch; }
+    .FeaturedProducts-slider__slide {
+      scroll-snap-align: start; }
+
+.Product {
+  height: 50rem;
+  width: 32rem;
+  max-height: 500px;
+  max-width: 320px; }
+  @media only screen and (max-width: 37.5em) {
+    .Product {
+      height: 75rem;
+      width: 48rem;
+      max-height: 500px;
+      max-width: 320px; } }
+  .Product-image img {
+    border-radius: .5rem;
+    object-fit: cover; }
+
+.Button {
+  cursor: pointer;
+  text-transform: uppercase;
+  text-decoration: none;
+  text-align: center;
+  font-size: 3rem;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  color: black;
+  padding: 1rem 3rem;
+  border: .3rem white solid;
+  transition: all .2s;
+  white-space: nowrap;
+  width: 50rem;
+  height: 8rem;
+  box-shadow: 0 0.5rem 0.5rem rgba(0, 0, 0, 0.4); }
+  @media only screen and (max-width: 37.5em) {
+    .Button {
+      padding: 2rem 1rem; } }
+  .Button:hover {
+    background-color: white;
+    color: black;
+    transform: translateY(-10px);
+    box-shadow: 0 1rem 1rem rgba(0, 0, 0, 0.4);
+    text-decoration: none; }
+    @media only screen and (max-width: 75em) {
+      .Button:hover {
+        transform: none;
+        box-shadow: 0 0.5rem 0.5rem rgba(0, 0, 0, 0.4); } }
+  .Button:active {
+    transform: translateY(-8px);
+    box-shadow: 0 0.5rem 2rem rgba(0, 0, 0, 0.4); }
+  .Button::after {
+    content: "";
+    display: inline-block;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1; }
+
+body, html {
+  padding: 0;
+  margin: 0;
+  background-color: black;
+  font-family: 'Jost', sans-serif;
+  font-size: 62.5%;
+  text-size-adjust: none; }
+  @media only screen and (max-width: 75em) {
+    body, html {
+      font-size: 50%; } }
+  @media only screen and (max-width: 56.25em) {
+    body, html {
+      font-size: 37.5%; } }
+  @media only screen and (max-width: 37.5em) {
+    body, html {
+      font-size: 30%; } }

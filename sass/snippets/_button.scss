@@ -1,0 +1,48 @@
+.Button{
+    cursor: pointer;
+    text-transform: uppercase;
+    text-decoration: none;
+    text-align: center;
+    font-size: 3rem;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    color: black;
+    padding: 1rem 3rem;
+    border: .3rem white solid;
+    transition: all .2s;
+    white-space: nowrap;
+    width: 50rem;
+    height: 8rem;
+    box-shadow: 0 .5rem .5rem rgba(black, .4);
+    @include respond(phone){
+        padding: 2rem 1rem; 
+    }
+    &:hover{
+        @include respond(tab-land){
+            transform: none;
+            box-shadow: 0 .5rem .5rem rgba(black, .4);
+        }
+        background-color: white;
+        color: black;
+        transform: translateY(-10px);
+        box-shadow: 0 1rem 1rem rgba(black, .4);
+        text-decoration: none;
+    }
+    &:active{
+        transform: translateY(-8px);
+        box-shadow: 0 .5rem 2rem rgba(black, .4);
+    }
+    &::after{
+        content: "";
+        display: inline-block;
+        height: 100%;
+        width: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: -1;
+    }
+
+}

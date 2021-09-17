@@ -1,0 +1,24 @@
+@import './abstracts/mixins';
+@import './sections/navbar';
+@import './sections/hero';
+@import './sections/collection';
+@import './sections/featured-products';
+@import './snippets/button';
+
+body, html{
+    padding: 0;
+    margin: 0;
+    background-color: black;
+    font-family:'Jost', sans-serif;
+    font-size: 62.5%; // 10px/16px = 62.5% | 1rem = 10px
+    text-size-adjust: none;
+    @include respond(tab-land){
+        font-size:  50%; // 8px/16px = 50% | 1rem = 8px
+    }
+    @include respond(tab-port){
+        font-size:  37.5%; // 6px/16px = 37.5% | 1rem = 6px
+    }
+    @include respond(phone){
+      font-size: 30%; // 5px/16px = 30% | 1rem = 5px
+    }
+}
