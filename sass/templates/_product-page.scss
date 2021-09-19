@@ -1,0 +1,67 @@
+.ProductPage{
+    height: 100vh;  
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;  
+    &-content{
+        padding-top: 11rem;
+        height: 100%; 
+        backdrop-filter: blur(100px) brightness(70%); 
+        &__info{
+            &--options{
+                button{
+                    height: 4rem;
+                    min-width: 4rem;
+                    padding: 0 1rem;
+                    background: transparent;
+                    p{
+                        color: white;
+                    }
+                    &:focus{
+                        outline: none;  
+                    }
+                }
+            }
+        }
+    }              
+}
+
+.ActionButton{ 
+    height: 5rem;
+    min-width: 7rem;
+    padding: 0 3rem;    
+    background: transparent;
+    p{
+        color: white;
+    }
+    &:focus{
+        outline: none;  
+    }
+    &:active{
+        background: white;
+        p{
+            color: black;   
+        }
+    }
+}
+
+.selected{
+    p{
+        color: black !important;    
+    }
+    background-color: white !important;
+}
+
+.disabled{
+    cursor: not-allowed !important; 
+    p{
+        color: grey !important;   
+    }
+    border-color: grey !important;  
+    &:active{
+        background: transparent !important;
+        p{
+            color: grey !important;   
+        }
+    }
+}

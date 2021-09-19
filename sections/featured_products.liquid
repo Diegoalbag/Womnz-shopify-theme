@@ -1,35 +1,18 @@
-<div id="FeaturedProducts" class="FeaturedProducts d-flex justify-content-center bg-white">
-    {% comment %} <div class="row d-flex justify-content-center h-100">
-        <div v-for="(product, index) in products.splice(0, 3)" :key="index" class="col-12 border border-primary d-flex justify-content-center">
-            <div class="Product d-flex flex-column justify-content-center">
+<div id="FeaturedProducts" class="FeaturedProducts d-flex flex-column justify-content-center bg-black">
+    <div class="FeaturedProducts-title py-3">
+        <h1 class="text-white display-4 font-weight-normal text-uppercase text-center">New Arrivals</h1>
+    </div>
+    <div class="FeaturedProducts-slider text-center">
+        <div v-for="(product, index) in products" :key="index" class="FeaturedProducts-slider__slide d-flex justify-content-center mx-5">
+            <div @click="goTo(product.url)" class="Product d-flex flex-column justify-content-center">
                 <figure class="Product-image h-75">
                     <img class="h-100 w-100 shadow" :src="product.images[0]"/>
                 </figure>
-                <h2 v-html="product.title" class="text-black"></h2>
+                <h2 v-html="product.title" class="text-white"></h2>
                 <p v-html="product.minPrice" class="text-black h3 text-muted"></p>
             </div>
         </div>
-    </div> {% endcomment %}
-        {% comment %} <div class="d-flex justify-content-center">
-            <div class="Product d-flex flex-column justify-content-center">
-                <figure class="Product-image h-75">
-                    <img class="h-100 w-100 shadow"/>
-                </figure>
-                <h2 class="text-black"></h2>
-                <p class="text-black h3 text-muted"></p>
-            </div>
-        </div> {% endcomment %}
-        <div class="FeaturedProducts-slider">
-            <div v-for="(product, index) in products.splice(0, 4)" :key="index" class="FeaturedProducts-slider__slide d-flex justify-content-center mx-5">
-                <div class="Product d-flex flex-column justify-content-center">
-                    <figure class="Product-image h-75">
-                        <img class="h-100 w-100 shadow" :src="product.images[0]"/>
-                    </figure>
-                    <h2 v-html="product.title" class="text-black"></h2>
-                    <p v-html="product.minPrice" class="text-black h3 text-muted"></p>
-                </div>
-            </div>
-        </div>
+    </div>
 </div>
 
 <script>
@@ -49,21 +32,24 @@ const FeaturedProducts = {
                             '{{ image.src | product_img_url: 'medium', scale: 2}}',
                             {% endfor %}
                         ],
-                        minPrice: '{{product.price_min | money}}'
+                        minPrice: '{{product.price_min | money}}',
+                        url: '{{product.url}}',
                     },
                 {% endfor %}
             ]
         );
 
-        onMounted(() => {
-            console.log(products.value);
-        })
-
         return{
             products
         }
     },
+    methods: {
+        goTo(productUrl){
+            window.location.href = productUrl;
+        }
+    }
 }
+
 Vue.createApp(FeaturedProducts).mount('#FeaturedProducts');
 </script>
 {% schema %}

@@ -19,7 +19,7 @@ ORDER: Base + typography > general layout + grid > page layout > components
   height: 8rem;
   border-bottom: 1px white solid;
   z-index: 1;
-  backdrop-filter: blur(5px); }
+  backdrop-filter: blur(50px); }
   @media only screen and (max-width: 56.25em) {
     .navbar {
       height: 15rem; } }
@@ -92,7 +92,7 @@ ORDER: Base + typography > general layout + grid > page layout > components
 
 .FeaturedProducts {
   height: min-content;
-  padding: 0 2rem;
+  padding: 0 8rem;
   overflow: hidden; }
   .FeaturedProducts-slider {
     display: flex;
@@ -108,6 +108,8 @@ ORDER: Base + typography > general layout + grid > page layout > components
   width: 32rem;
   max-height: 500px;
   max-width: 320px; }
+  .Product:hover {
+    cursor: pointer; }
   @media only screen and (max-width: 37.5em) {
     .Product {
       height: 75rem;
@@ -161,6 +163,54 @@ ORDER: Base + typography > general layout + grid > page layout > components
     top: 0;
     left: 0;
     z-index: -1; }
+
+.ProductPage {
+  height: 100vh;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat; }
+  .ProductPage-content {
+    padding-top: 11rem;
+    height: 100%;
+    backdrop-filter: blur(100px) brightness(70%); }
+    .ProductPage-content__info--options button {
+      height: 4rem;
+      min-width: 4rem;
+      padding: 0 1rem;
+      background: transparent; }
+      .ProductPage-content__info--options button p {
+        color: white; }
+      .ProductPage-content__info--options button:focus {
+        outline: none; }
+
+.ActionButton {
+  height: 5rem;
+  min-width: 7rem;
+  padding: 0 3rem;
+  background: transparent; }
+  .ActionButton p {
+    color: white; }
+  .ActionButton:focus {
+    outline: none; }
+  .ActionButton:active {
+    background: white; }
+    .ActionButton:active p {
+      color: black; }
+
+.selected {
+  background-color: white !important; }
+  .selected p {
+    color: black !important; }
+
+.disabled {
+  cursor: not-allowed !important;
+  border-color: grey !important; }
+  .disabled p {
+    color: grey !important; }
+  .disabled:active {
+    background: transparent !important; }
+    .disabled:active p {
+      color: grey !important; }
 
 body, html {
   padding: 0;

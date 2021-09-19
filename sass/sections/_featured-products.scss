@@ -1,7 +1,7 @@
 .FeaturedProducts{
     height: min-content;     
-    padding: 0 2rem;     
-    overflow: hidden;
+    padding: 0 8rem;     
+    overflow: hidden;  
     &-slider{
         display: flex;
         overflow-x: auto;
@@ -9,7 +9,7 @@
         scroll-behavior: smooth;
         -webkit-overflow-scrolling: touch;
         &__slide{
-            scroll-snap-align: start;   
+            scroll-snap-align: start;        
         }
     }  
 }
@@ -19,6 +19,9 @@
     width: 32rem;   
     max-height: 500px;  
     max-width: 320px;
+    &:hover{
+        cursor: pointer;    
+    }
     @include respond(phone){
         height: 75rem;
         width: 48rem;       

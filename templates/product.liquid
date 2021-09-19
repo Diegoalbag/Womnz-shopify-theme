@@ -1,29 +1,101 @@
 {% assign current_variant = product.selected_or_first_available_variant %}
 {% assign featured_image = current_variant.featured_image | default: product.featured_image %}
-<img src="{{ featured_image | img_url: 'large' }}" alt="{{ featured_image.alt | escape }}" id="ProductPhotoImg">
-{% for image in product.images %}
-  <a href="{{ image.src | img_url: 'large' }}">
-    <img src="{{ image.src | img_url: 'compact' }}" alt="{{ image.alt | escape }}">
-  </a>
-{% endfor %}
-<h1>{{ product.title }}</h1>
-<form action="/cart/add" method="post" enctype="multipart/form-data" id="AddToCartForm">
-  <select name="id" id="productSelect">
-    {% for variant in product.variants %}
-      {% if variant.available %}
-        <option value="{{ variant.id }}">
-          {{ variant.title }} - {{ variant.price | money_with_currency }}
-        </option>
-      {% else %}
-        <option disabled="disabled">
-          {{ variant.title }} - sold out
-        </option>
-      {% endif %}
-    {% endfor %}
-  </select>
-  {{ current_variant.price | money }}
-  <label for="Quantity">quantity</label>
-  <input type="number" id="Quantity" name="quantity" value="1" min="1">
-  <button type="submit" name="add" id="AddToCart">Add to cart</button>
-</form>
-<div>{{ product.description }}</div>
+<div
+id="ProductPage" 
+style="background-image: url('../../assets/Hero.jpg')"
+class="ProductPage">
+  <div class="ProductPage-content container-fluid m-0 row px-5 pb-5">
+    <div class="ProductPage-content__gallery border col-6">
+    </div>
+    <div class="ProductPage-content__info d-flex flex-column justify-content-center border border-danger col-6">
+      <h1 class=" display-2 text-uppercase text-white font-weight-normal">{{product.title}}</h1>
+      <p class="h2 text-white font-weight-light">{{current_variant.price | money}}</p>
+      {% comment %} product options loop {% endcomment %}
+      {% for product_option in product.options_with_values %}
+        <h2 class="h1 mt-5 text-white text-uppercase font-weight-light">{{product_option.name}}</h2>
+        <div class="ProductPage-content__info--options d-flex">
+        {% comment %} product option values loop {% endcomment %}
+        {% for value in product_option.values %}
+            <button 
+            @click="changeOption('option{{product_option.position}}', '{{value}}')" 
+            :class="`${variant_selected.option{{product_option.position}} == '{{value}}' ? 'selected' : ''} mr-2 border d-flex justify-content-center align-items-center`">
+              <p class="h2 font-weight-normal text-uppercase m-0">{{value}}</p>
+            </button>
+        {% endfor %}
+        </div>
+      {% endfor %}
+      <h2 class="h1 mt-5 text-white text-uppercase font-weight-light">description</h2>
+      <p class="h4 font-weight-normal text-white text-justify">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut fringilla accumsan nisi interdum finibus. Suspendisse cursus nisi ut consequat cursus. Maecenas pellentesque dui eget orci vulputate, a mattis nunc lobortis. Donec consequat diam ac lacus ultrices, a vestibulum ligula condimentum. Mauris dictum, ex a laoreet dapibus, tellus quam luctus metus, sit amet porta justo ante ac orci.</p>
+      <div class="d-flex">
+        <button 
+        @click="ActionButton()"
+        :class="`ActionButton mt-5 mr-3 border d-flex justify-content-center align-items-center ${current_variant_id == 'null' ? 'disabled' : ''}`" :disabled="current_variant_id == 'null'">
+          <p class="h3 font-weight-normal text-uppercase m-0">add to cart</p>
+        </button>
+        <button 
+        @click="ActionButton()"
+        :class="`ActionButton mt-5 mr-3 border d-flex justify-content-center align-items-center ${current_variant_id == 'null' ? 'disabled' : ''}`" :disabled="current_variant_id == 'null'">
+          <p class="h3 font-weight-normal text-uppercase m-0">add to wishlist</p>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const { createApp, ref, computed, watch, onMounted, reactive} = Vue;
+
+const ProductPage = {
+  setup() {
+    let current_variant_id = computed(() => {
+      let filtered_variants = variants.value.find(variant => {
+        return variant.option1 == variant_selected.value.option1 && variant.option2 == variant_selected.value.option2 && variant.option3 == variant_selected.value.option3;
+      });
+
+      if(filtered_variants){ 
+        return filtered_variants.id;
+      }
+      else{
+        return 'null';
+      }
+    });
+    let variant_selected = ref({
+      option1: '{{product.options_with_values[0].selected_value}}',
+      option2: '{{product.options_with_values[1].selected_value}}',
+      option3: '{{product.options_with_values[2].selected_value}}',
+    });
+    let variants = ref([
+      {% for variant in product.variants %}
+        {
+          id: '{{variant.id}}',
+          available: {{variant.available}},
+          option1: '{{variant.option1}}',
+          option2: '{{variant.option2}}',
+          option3: '{{variant.option3}}',
+          price: '{{variant.price | money}}',
+          {% assign img_url = variant.image.src | img_url: '500x', scale: 2%}
+          img: '{% unless condition %}{{img_url}}{% endunless %}'
+        },
+      {% endfor %}
+    ]);
+    let featured_image = ref('{{featured_image | img_url: '500x', scale: 2}}');
+
+    const changeOption = (option, value) => {
+      variant_selected.value[option] = value;
+    };
+    const ActionButton = () => {
+    }
+    return {
+      current_variant_id,
+      variants,
+      featured_image,
+      variant_selected,
+      changeOption,
+      ActionButton
+    }
+  },
+
+};
+
+Vue.createApp(ProductPage).mount('#ProductPage');
+</script>

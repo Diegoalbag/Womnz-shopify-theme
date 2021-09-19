@@ -1,4 +1,7 @@
-<div id="collection" class="collection container-fluid py-5 d-flex justify-content-center">
+<div id="collection" class="collection container-fluid py-5 d-flex flex-column justify-content-center">
+    <div class="collection-title py-5">
+        <h1 class="text-white display-4 font-weight-normal text-uppercase text-center">collections</h1>
+    </div>
     <div class="row d-flex justify-content-center">
         {% for collection in collections %}
             <div @click="goTo('{{collection.url}}')" class="collection-card col-12 col-sm-4 col-md-4 col-lg-4 my-5 mx-0">
