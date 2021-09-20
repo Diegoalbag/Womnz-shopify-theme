@@ -165,14 +165,10 @@ ORDER: Base + typography > general layout + grid > page layout > components
     z-index: -1; }
 
 .ProductPage {
-  height: 100vh;
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat; }
+  height: 100vh; }
   .ProductPage-content {
     padding-top: 11rem;
-    height: 100%;
-    backdrop-filter: blur(100px) brightness(70%); }
+    height: 100%; }
     .ProductPage-content__info--options button {
       height: 4rem;
       min-width: 4rem;
@@ -182,6 +178,22 @@ ORDER: Base + typography > general layout + grid > page layout > components
         color: white; }
       .ProductPage-content__info--options button:focus {
         outline: none; }
+    .ProductPage-content__info--quantity {
+      height: 5rem;
+      min-width: 4rem;
+      width: min-content;
+      padding: 0 1rem;
+      background: transparent; }
+      .ProductPage-content__info--quantity input {
+        outline: none;
+        border: none;
+        appearance: none;
+        width: min-content; }
+      .ProductPage-content__info--quantity input[type=number]::-webkit-inner-spin-button,
+      .ProductPage-content__info--quantity input[type=number]::-webkit-outer-spin-button {
+        display: none; }
+      .ProductPage-content__info--quantity i {
+        cursor: pointer; }
 
 .ActionButton {
   height: 5rem;
@@ -189,7 +201,8 @@ ORDER: Base + typography > general layout + grid > page layout > components
   padding: 0 3rem;
   background: transparent; }
   .ActionButton p {
-    color: white; }
+    color: white;
+    white-space: nowrap; }
   .ActionButton:focus {
     outline: none; }
   .ActionButton:active {
@@ -215,7 +228,7 @@ ORDER: Base + typography > general layout + grid > page layout > components
 body, html {
   padding: 0;
   margin: 0;
-  background-color: black;
+  background-color: #1f1f1f;
   font-family: 'Jost', sans-serif;
   font-size: 62.5%;
   text-size-adjust: none; }

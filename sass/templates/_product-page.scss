@@ -1,12 +1,8 @@
 .ProductPage{
     height: 100vh;  
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;  
     &-content{
         padding-top: 11rem;
         height: 100%; 
-        backdrop-filter: blur(100px) brightness(70%); 
         &__info{
             &--options{
                 button{
@@ -22,6 +18,26 @@
                     }
                 }
             }
+            &--quantity{
+                height: 5rem;
+                min-width: 4rem;
+                width: min-content; 
+                padding: 0 1rem;
+                background: transparent;
+                input{
+                    outline: none;
+                    border: none;
+                    appearance: none;   
+                    width: min-content;
+                }
+                input[type=number]::-webkit-inner-spin-button,
+                input[type=number]::-webkit-outer-spin-button {
+                  display: none;    
+                }
+                i{
+                    cursor: pointer;
+                }
+            }
         }
     }              
 }
@@ -33,6 +49,7 @@
     background: transparent;
     p{
         color: white;
+        white-space: nowrap;    
     }
     &:focus{
         outline: none;  

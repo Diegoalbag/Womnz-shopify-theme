@@ -2,42 +2,56 @@
 {% assign featured_image = current_variant.featured_image | default: product.featured_image %}
 <div
 id="ProductPage" 
-style="background-image: url('../../assets/Hero.jpg')"
 class="ProductPage">
   <div class="ProductPage-content container-fluid m-0 row px-5 pb-5">
-    <div class="ProductPage-content__gallery border col-6">
+    <div class="ProductPage-content__gallery col-12 col-md-6">
     </div>
-    <div class="ProductPage-content__info d-flex flex-column justify-content-center border border-danger col-6">
+    <div class="ProductPage-content__info d-flex flex-column justify-content-center col-12 col-md-6">
       <h1 class=" display-2 text-uppercase text-white font-weight-normal">{{product.title}}</h1>
       <p class="h2 text-white font-weight-light">{{current_variant.price | money}}</p>
       {% comment %} product options loop {% endcomment %}
       {% for product_option in product.options_with_values %}
         <h2 class="h1 mt-5 text-white text-uppercase font-weight-light">{{product_option.name}}</h2>
-        <div class="ProductPage-content__info--options d-flex">
+        <div class="ProductPage-content__info--options d-flex gap-2">
         {% comment %} product option values loop {% endcomment %}
         {% for value in product_option.values %}
             <button 
             @click="changeOption('option{{product_option.position}}', '{{value}}')" 
-            :class="`${variant_selected.option{{product_option.position}} == '{{value}}' ? 'selected' : ''} mr-2 border d-flex justify-content-center align-items-center`">
+            :class="`${variant_selected.option{{product_option.position}} == '{{value}}' ? 'selected' : ''} border d-flex justify-content-center align-items-center`">
               <p class="h2 font-weight-normal text-uppercase m-0">{{value}}</p>
             </button>
         {% endfor %}
         </div>
       {% endfor %}
-      <h2 class="h1 mt-5 text-white text-uppercase font-weight-light">description</h2>
-      <p class="h4 font-weight-normal text-white text-justify">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut fringilla accumsan nisi interdum finibus. Suspendisse cursus nisi ut consequat cursus. Maecenas pellentesque dui eget orci vulputate, a mattis nunc lobortis. Donec consequat diam ac lacus ultrices, a vestibulum ligula condimentum. Mauris dictum, ex a laoreet dapibus, tellus quam luctus metus, sit amet porta justo ante ac orci.</p>
-      <div class="d-flex">
+      {% comment %} product quantity {% endcomment %}
+      <h2 class="h1 mt-5 text-white text-uppercase font-weight-light">quantity</h2>
+      <div class="ProductPage-content__info--quantity border d-flex justify-content-center align-items-center">
+        <i @click="current_variant_quantity > 1 ? current_variant_quantity-- : ''" class="fas fa-minus fs-2 text-white"></i>
+        <input ref="quantityInput" type="number" min="1" v-model="current_variant_quantity" class="fs-2 text-white text-center bg-transparent"/> 
+        {% comment %} you can still manual input more than stock {% endcomment %}
+        <i @click="current_variant_quantity < current_variant_object.inventory_quantity ? current_variant_quantity++ : '' " class="fas fa-plus fs-2 text-white"></i>
+      </div>
+      {% comment %} product actions {% endcomment %}
+      <div class="row mx-1 d-flex gap-2 mt-5">
+        <span v-if="current_variant_object.inventory_quantity < 30 && current_variant_object.inventory_quantity > 0" class="fs-3 text-warning text-uppercase"><i class="fas fa-exclamation-triangle text-warning fs-3"></i> only <span v-html="current_variant_object.inventory_quantity"></span> left in stock</span>
+        <span v-if="out_of_stock" class="fs-3 text-danger text-uppercase"><i class="fas fa-exclamation-triangle text-danger fs-3"></i> out of stock</span>
+        <span v-if="variant_not_available" class="fs-3 text-white text-uppercase"><i class="fas fa-exclamation-circle text-white fs-3"></i> not available</span>
+        <div class="col-12"></div>
         <button 
-        @click="ActionButton()"
-        :class="`ActionButton mt-5 mr-3 border d-flex justify-content-center align-items-center ${current_variant_id == 'null' ? 'disabled' : ''}`" :disabled="current_variant_id == 'null'">
+        @click="AddToCart()"
+        :class="`ActionButton col-5 col-md-4 border d-flex justify-content-center align-items-center ${current_variant_id == 'null' || out_of_stock ? 'disabled' : ''}`" :disabled="current_variant_id == 'null' || out_of_stock">
           <p class="h3 font-weight-normal text-uppercase m-0">add to cart</p>
         </button>
         <button 
         @click="ActionButton()"
-        :class="`ActionButton mt-5 mr-3 border d-flex justify-content-center align-items-center ${current_variant_id == 'null' ? 'disabled' : ''}`" :disabled="current_variant_id == 'null'">
+        :class="`ActionButton col-5 col-md-4 border d-flex justify-content-center align-items-center ${current_variant_id == 'null' ? 'disabled' : ''}`" :disabled="current_variant_id == 'null'">
           <p class="h3 font-weight-normal text-uppercase m-0">add to wishlist</p>
         </button>
       </div>
+      {% comment %} product description {% endcomment %}
+      <h2 class="h1 mt-5 text-white text-uppercase font-weight-light">description</h2>
+      <p class="fs-3 font-weight-light text-white text-justify">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut fringilla accumsan nisi interdum finibus. Suspendisse cursus nisi ut consequat cursus. Maecenas pellentesque dui eget orci vulputate, a mattis nunc lobortis. Donec consequat diam ac lacus ultrices, a vestibulum ligula condimentum. Mauris dictum, ex a laoreet dapibus, tellus quam luctus metus, sit amet porta justo ante ac orci.</p>
+    
     </div>
   </div>
 </div>
@@ -47,6 +61,10 @@ const { createApp, ref, computed, watch, onMounted, reactive} = Vue;
 
 const ProductPage = {
   setup() {
+    let current_variant_quantity = ref(1);
+    let out_of_stock = computed(() => {
+      return current_variant_object.value.inventory_quantity == 0;
+    });
     let current_variant_id = computed(() => {
       let filtered_variants = variants.value.find(variant => {
         return variant.option1 == variant_selected.value.option1 && variant.option2 == variant_selected.value.option2 && variant.option3 == variant_selected.value.option3;
@@ -54,6 +72,21 @@ const ProductPage = {
 
       if(filtered_variants){ 
         return filtered_variants.id;
+      }
+      else{
+        return 'null';
+      }
+    });
+    let variant_not_available = computed(() => {
+      return current_variant_id.value == 'null';
+    });
+    let current_variant_object = computed(() => {
+      let filtered_variants = variants.value.find(variant => {
+        return variant.option1 == variant_selected.value.option1 && variant.option2 == variant_selected.value.option2 && variant.option3 == variant_selected.value.option3;
+      });
+
+      if(filtered_variants){ 
+        return filtered_variants;
       }
       else{
         return 'null';
@@ -74,7 +107,8 @@ const ProductPage = {
           option3: '{{variant.option3}}',
           price: '{{variant.price | money}}',
           {% assign img_url = variant.image.src | img_url: '500x', scale: 2%}
-          img: '{% unless condition %}{{img_url}}{% endunless %}'
+          img: '{% unless condition %}{{img_url}}{% endunless %}',
+          inventory_quantity: '{{variant.inventory_quantity}}'
         },
       {% endfor %}
     ]);
@@ -85,13 +119,37 @@ const ProductPage = {
     };
     const ActionButton = () => {
     }
+    const AddToCart = () => {
+      if(current_variant_id.value == 'null') return;
+
+      axios.post('/cart/add.js', {
+        items: [
+          {
+            quantity: 1,
+            id: current_variant_id.value,
+          }
+        ]
+      })
+        .then(function (response) {
+          console.log(response);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+
+    }
     return {
       current_variant_id,
       variants,
       featured_image,
       variant_selected,
       changeOption,
-      ActionButton
+      ActionButton,
+      AddToCart,
+      current_variant_quantity,
+      current_variant_object,
+      out_of_stock,
+      variant_not_available
     }
   },
 
