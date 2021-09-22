@@ -1,6 +1,6 @@
-<div class="navbar container-fluid position-absolute justify-content-between">
+<div id="navbar" class="navbar container-fluid position-absolute justify-content-between">
     {% if section.settings.logo %}
-        <figure class="navbar-logo mx-5">
+        <figure @click="goTo('/')" class="navbar-logo mx-5">
         <img class="" src="{{ section.settings.logo | img_url: '500x' }}" />
         </figure>
     {% endif %}
@@ -23,6 +23,7 @@
         <i search-icon class="fas fa-search text-white mx-5 d-none d-md-block"></i>
         <i class="fas fa-user text-white mx-5 d-none d-md-block"></i>
         <i class="far fa-heart text-white mx-5 d-none d-md-block"></i>
+        <i @click="goTo('/cart')" class="fas fa-shopping-bag text-white mx-5 d-none d-md-block"></i>
         <i class="fas fa-ellipsis-h text-white mx-5 d-md-none"></i>
     </div>
     {% comment %} {% if section.settings.logo %}
@@ -51,6 +52,21 @@
         <i class="far fa-heart"></i>
     </div> {% endcomment %}
 </div>
+
+<script>
+const navbar = {
+    setup(){
+        goTo = (productUrl) => {
+            window.location.href = productUrl;
+        }
+
+        return {
+            goTo
+        };
+    }
+}
+Vue.createApp(navbar).mount('#navbar');
+</script>
 
 {% schema %}
     {

@@ -18,15 +18,16 @@ ORDER: Base + typography > general layout + grid > page layout > components
 .navbar {
   height: 8rem;
   border-bottom: 1px white solid;
-  z-index: 1;
+  z-index: 10;
   backdrop-filter: blur(50px); }
   @media only screen and (max-width: 56.25em) {
     .navbar {
-      height: 15rem; } }
+      height: 12rem; } }
   .navbar-logo {
     height: 100%;
     width: fit-content;
-    margin: 0; }
+    margin: 0;
+    cursor: pointer; }
     .navbar-logo img {
       height: 100%;
       margin: 0; }
@@ -120,6 +121,39 @@ ORDER: Base + typography > general layout + grid > page layout > components
     border-radius: .5rem;
     object-fit: cover; }
 
+.CartPage {
+  height: min-content; }
+  .CartPage-content {
+    padding: 11rem 5rem 5rem 5rem;
+    min-height: 100vh; }
+
+.CartItem {
+  height: max-content;
+  border-bottom: 1px solid #4c4c4c; }
+  .CartItem-image {
+    height: 15rem;
+    width: 10rem; }
+    .CartItem-image img {
+      height: 100%;
+      width: 100%;
+      object-fit: cover; }
+  .CartItem-info_quantity {
+    height: 5rem;
+    min-width: 4rem;
+    width: min-content;
+    padding: 0 1rem;
+    background: transparent; }
+    .CartItem-info_quantity input {
+      outline: none;
+      border: none;
+      appearance: none;
+      width: min-content; }
+    .CartItem-info_quantity input[type=number]::-webkit-inner-spin-button,
+    .CartItem-info_quantity input[type=number]::-webkit-outer-spin-button {
+      display: none; }
+    .CartItem-info_quantity i {
+      cursor: pointer; }
+
 .Button {
   cursor: pointer;
   text-transform: uppercase;
@@ -165,10 +199,10 @@ ORDER: Base + typography > general layout + grid > page layout > components
     z-index: -1; }
 
 .ProductPage {
-  height: 100vh; }
+  min-height: 100vh; }
   .ProductPage-content {
     padding-top: 11rem;
-    height: 100%; }
+    min-height: 100vh; }
     .ProductPage-content__info--options button {
       height: 4rem;
       min-width: 4rem;
@@ -225,19 +259,28 @@ ORDER: Base + typography > general layout + grid > page layout > components
     .disabled:active p {
       color: grey !important; }
 
-body, html {
-  padding: 0;
+*,
+*::before,
+*::after {
   margin: 0;
+  padding: 0;
+  box-sizing: inherit; }
+
+body {
+  box-sizing: border-box;
   background-color: #1f1f1f;
-  font-family: 'Jost', sans-serif;
+  position: relative;
+  font-family: 'Jost', sans-serif; }
+
+html {
   font-size: 62.5%;
-  text-size-adjust: none; }
+  -webkit-text-size-adjust: none; }
   @media only screen and (max-width: 75em) {
-    body, html {
+    html {
       font-size: 50%; } }
   @media only screen and (max-width: 56.25em) {
-    body, html {
+    html {
       font-size: 37.5%; } }
   @media only screen and (max-width: 37.5em) {
-    body, html {
+    html {
       font-size: 30%; } }

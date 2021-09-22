@@ -1,61 +1,68 @@
-<div id="CartPage">
+<div id="CartPage" class="CartPage">
+  <div class="CartPage-content row container-fluid">
+    <div class="CartPage-content_items col-12 col-md-6 ">
+      <template v-if="cart.items">
+        <div v-for="(item, index) in cart.items" :key="index" class="CartItem d-flex gap-5">
+          <figure class="CartItem-image my-2">
+            <img :src="item.image" class="rounded-3 shadow"/>
+          </figure>
+          <div class="CartItem-info py-3 d-flex flex-column">
+            <span>
+              <h1 class="text-white fw-normal d-inline-block me-3" v-html="item.product_title"></h1>
+              <span class="text-muted text-uppercase h2" v-html="item.variant_title"></span>
+            </span>
+            <h3 class="text-muted fw-normal" v-html="item.price"></h3>
+            <div class="CartItem-info_quantity border d-flex justify-content-center align-items-center mt-5">
+              <i @click="changeCart(item.variant_id, item.quantity - 1)" class="fas fa-minus fs-2 text-white"></i>
+              <span class="fs-2 text-white text-center mx-5" v-html="item.quantity"></span>
+              <i @click="changeCart(item.variant_id, item.quantity + 1)" class="fas fa-plus fs-2 text-white"></i>
+            </div>
+          </div>
+        </div>
+      </template>
+      <template v-else>
+        <h1>no items in cart</h1>
+      </template>
+    </div>
+    <div class="CartPage-content_info col-12 col-md-6 border border-danger">
+    </div>
+  </div>
 </div>
 
-{% comment %} {% if cart.item_count > 0 %}
-  <h1>cart</h1>
-  <form action="/cart" method="post" novalidate>
-    <table>
-      <thead>
-        <th colspan="2">Prod</th>
-        <th>Price</th>
-        <th>Qty</th>
-        <th>total</th>
-      </thead>
-      <tbody>
-        {% for item in cart.items %}
-          <tr>
-            <td>
-              <a href="{{ item.url | within: collections.all }}">
-                <img src="{{ item | img_url: 'medium' }}" alt="{{ item.title | escape }}">
-              </a>
-            </td>
-            <td>
-              <a href="{{ item.url }}">{{ item.product.title }}</a>
-              {{ item.variant.title }}
-              <a href="/cart/change?line={{ forloop.index }}&amp;quantity=0">remove</a>
-            </td>
-            <td>{{ item.price | money }}</td>
-            <td>
-              <input type="number" name="updates[]" id="updates_{{ item.key }}" value="{{ item.quantity }}" min="0">
-            </td>
-            <td>
-              {% if item.original_line_price != item.line_price %}{{ item.original_line_price | money }}{% endif %}
-              {{ item.line_price | money }}
-              {% for discount in item.discounts %}{{ discount.title }}{% endfor %}
-            </td>
-          </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-    <div>
-      <p>sub total : {{ cart.total_price | money }}</p>
-      <button type="submit" name="update">Update</button>
-      <button type="submit" name="checkout">Checkout</button>
-    </div>
-  </form>
-{% else %}
-  <h2>cart</h2>
-  Cart is empty
-{% endif %} {% endcomment %}
-
 <script>
+const { createApp, ref, computed, watch, onMounted, reactive} = Vue;
+
 const CartPage = {
-  data() {
+  setup() {
+
+    let cart = ref({});
+
+    (getCart = () => {
+      axios.get('/cart.js')
+      .then(response => {
+        cart.value = response.data;
+      });
+    })();
+
+    changeCart = (id, quantity) => {
+      console.log(typeof(id), quantity)
+      axios.post('/cart/update.js', 
+      `updates[${id}]=${quantity}`
+      )
+      .then(response => {
+        cart.value = response.data;
+      })
+      .catch(error => {
+        console.log(error);
+      })
+    };
+
     return {
-      klk: 'Mamaguebo'  
-    }
+      cart,
+      getCart,
+      changeCart
+    };
   }
 }
-
-Vue.createApp(CartPage).mount('#CartPage');
+createApp(CartPage).mount('#CartPage');
 </script>

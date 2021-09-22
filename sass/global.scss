@@ -3,23 +3,33 @@
 @import './sections/hero';
 @import './sections/collection';
 @import './sections/featured-products';
+@import './sections/cart';
 @import './snippets/button';
 @import './templates/product-page';
 
-body, html{
-    padding: 0;
-    margin: 0;
-    background-color: rgb(31, 31, 31);        
-    font-family:'Jost', sans-serif;
-    font-size: 62.5%; // 10px/16px = 62.5% | 1rem = 10px
-    text-size-adjust: none;
-    @include respond(tab-land){
-        font-size:  50%; // 8px/16px = 50% | 1rem = 8px
-    }
-    @include respond(tab-port){
-        font-size:  37.5%; // 6px/16px = 37.5% | 1rem = 6px
-    }
-    @include respond(phone){
-      font-size: 30%; // 5px/16px = 30% | 1rem = 5px
-    }
+*,
+*::before,
+*::after{
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+body{
+  box-sizing: border-box;
+  background-color: rgb(31, 31, 31);  
+  position: relative;
+  font-family:'Jost', sans-serif;    
+}
+html{
+  font-size: 62.5%; // 10px/16px = 62.5% | 1rem = 10px
+  -webkit-text-size-adjust: none;      
+  @include respond(tab-land){
+      font-size:  50%; // 8px/16px = 50% | 1rem = 8px
+  }
+  @include respond(tab-port){
+      font-size:  37.5%; // 6px/16px = 37.5% | 1rem = 6px
+  }
+  @include respond(phone){
+    font-size: 30%; // 5px/16px = 30% | 1rem = 5px
+  }
 }

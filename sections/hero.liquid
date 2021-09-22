@@ -15,7 +15,7 @@
         {% unless block.settings.hero_image == blank and block.settings.hero_image_mobile == blank %}
             {% if forloop.first == true %}
                 <div class="carousel-item active">
-                    <img src="{{ block.settings.hero_image | img_url: '1024x' }}" class="d-none w-100 d-md-block" alt="...">
+                    <img src="{{ block.settings.hero_image | img_url: '1024x', scale: 2 }}" class="d-none w-100 d-md-block" alt="...">
                     <img src="{{ block.settings.hero_image_mobile | img_url: '1024x' }}" class="w-100 d-block d-md-none" alt="...">
                     <div class="w-100 h-100 position-absolute d-flex flex-column carousel-content{{' '}} 
                     {%- case block.settings.button_position -%}
