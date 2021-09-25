@@ -4,11 +4,34 @@
 id="ProductPage" 
 class="ProductPage">
   <div class="ProductPage-content container-fluid m-0 row px-5 pb-5">
-    <div class="ProductPage-content__gallery border col-12 col-md-6">
+    <div class="ProductPage-content__gallery mb-5 d-flex align-items-center justify-content-center col-12 col-md-6">
+      <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner slide">
+          {% for image in product.images %}
+            {% if forloop.first == true %}
+              <div class="carousel-item active">
+                <img src="{{ image.src | product_img_url: '600x' }}" class="d-block w-100">
+              </div>
+            {% else %}
+              <div class="carousel-item">
+                <img src="{{ image.src | product_img_url: '600x' }}" class="d-block w-100">
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
     </div>
     <div class="ProductPage-content__info d-flex flex-column justify-content-center col-12 col-md-6">
       <h1 class="ProductPage-content__info-title text-uppercase text-white font-weight-normal">{{product.title}}</h1>
-      <h1 class="ProductPage-content__info-price text-white font-weight-light">{{current_variant.price | money}}</h1>
+      <h1 class="ProductPage-content__info-price text-muted font-weight-light">{{current_variant.price | money}}</h1>
       {% comment %} product options loop {% endcomment %}
       {% for product_option in product.options_with_values %}
         <h1 class="ProductPage-content__info-subtitle mt-5 text-white text-uppercase font-weight-light">{{product_option.name}}</h1>
