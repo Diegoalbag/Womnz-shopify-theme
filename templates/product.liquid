@@ -4,15 +4,15 @@
 id="ProductPage" 
 class="ProductPage">
   <div class="ProductPage-content container-fluid m-0 row px-5 pb-5">
-    <div class="ProductPage-content__gallery col-12 col-md-6">
+    <div class="ProductPage-content__gallery border col-12 col-md-6">
     </div>
     <div class="ProductPage-content__info d-flex flex-column justify-content-center col-12 col-md-6">
-      <h1 class=" display-2 text-uppercase text-white font-weight-normal">{{product.title}}</h1>
-      <p class="h2 text-white font-weight-light">{{current_variant.price | money}}</p>
+      <h1 class="ProductPage-content__info-title text-uppercase text-white font-weight-normal">{{product.title}}</h1>
+      <h1 class="ProductPage-content__info-price text-white font-weight-light">{{current_variant.price | money}}</h1>
       {% comment %} product options loop {% endcomment %}
       {% for product_option in product.options_with_values %}
-        <h2 class="h1 mt-5 text-white text-uppercase font-weight-light">{{product_option.name}}</h2>
-        <div class="ProductPage-content__info--options d-flex gap-2">
+        <h1 class="ProductPage-content__info-subtitle mt-5 text-white text-uppercase font-weight-light">{{product_option.name}}</h1>
+        <div class="ProductPage-content__info-options d-flex gap-2">
         {% comment %} product option values loop {% endcomment %}
         {% for value in product_option.values %}
             <button 
@@ -24,36 +24,40 @@ class="ProductPage">
         </div>
       {% endfor %}
       {% comment %} product quantity {% endcomment %}
-      <h2 class="h1 mt-5 text-white text-uppercase font-weight-light">quantity</h2>
-      <div class="ProductPage-content__info--quantity border d-flex justify-content-center align-items-center">
-        <i @click="current_variant_quantity > 1 ? current_variant_quantity-- : ''" class="fas fa-minus fs-2 text-white"></i>
-        <input ref="quantityInput" type="number" min="1" v-model="current_variant_quantity" class="fs-2 text-white text-center bg-transparent"/> 
+      <h1 class="ProductPage-content__info-subtitle mt-5 text-white text-uppercase font-weight-light">quantity</h1>
+      <div class="ProductPage-content__info-quantity border d-flex justify-content-center align-items-center">
+        <i @click="current_variant_quantity > 1 ? current_variant_quantity-- : ''" class="fas fa-minus me-3 text-white"></i> 
+        <span class="text-white text-center mx-5" v-html="current_variant_quantity"></span>
         {% comment %} you can still manual input more than stock {% endcomment %}
-        <i @click="current_variant_quantity < current_variant_object.inventory_quantity ? current_variant_quantity++ : '' " class="fas fa-plus fs-2 text-white"></i>
+        <i @click="current_variant_quantity < current_variant_object.inventory_quantity ? current_variant_quantity++ : '' " class="fas fa-plus ms-3 text-white"></i>
       </div>
       {% comment %} product actions {% endcomment %}
-      <div class="row mx-1 d-flex gap-2 mt-5">
-        <span v-if="current_variant_object.inventory_quantity < 30 && current_variant_object.inventory_quantity > 0" class="fs-3 text-warning text-uppercase"><i class="fas fa-exclamation-triangle text-warning fs-3"></i> only <span v-html="current_variant_object.inventory_quantity"></span> left in stock</span>
-        <span v-if="out_of_stock" class="fs-3 text-danger text-uppercase"><i class="fas fa-exclamation-triangle text-danger fs-3"></i> out of stock</span>
-        <span v-if="variant_not_available" class="fs-3 text-white text-uppercase"><i class="fas fa-exclamation-circle text-white fs-3"></i> not available</span>
-        <div class="col-12"></div>
+      <div class="ProductPage-content__info-actions row mx-1 d-flex mt-5">
+        <span v-if="current_variant_object.inventory_quantity < 30 && current_variant_object.inventory_quantity > 0" class="col-12 text-warning text-uppercase"><i class="fas fa-exclamation-triangle text-warning"></i> only <span v-html="current_variant_object.inventory_quantity"></span> left in stock</span>
+        <span v-if="out_of_stock" class="col-12 text-danger text-uppercase"><i class="fas fa-exclamation-triangle text-danger"></i> out of stock</span>
+        <span v-if="variant_not_available" class="col-12 text-white text-uppercase"><i class="fas fa-exclamation-circle text-white"></i> not available</span>
         <button 
         @click="AddToCart()"
-        :class="`ActionButton col-5 col-md-4 border d-flex justify-content-center align-items-center ${current_variant_id == 'null' || out_of_stock ? 'disabled' : ''}`" :disabled="current_variant_id == 'null' || out_of_stock">
-          <p class="h3 font-weight-normal text-uppercase m-0">add to cart</p>
+        :class="`ActionButton me-4 col-5 col-md-4 border d-flex justify-content-center align-items-center ${current_variant_id == 'null' || out_of_stock ? 'disabled' : ''}`" :disabled="current_variant_id == 'null' || out_of_stock">
+          <p class="font-weight-normal text-uppercase m-0">add to cart</p>
         </button>
         <button 
         @click="ActionButton()"
-        :class="`ActionButton col-5 col-md-4 border d-flex justify-content-center align-items-center ${current_variant_id == 'null' ? 'disabled' : ''}`" :disabled="current_variant_id == 'null'">
-          <p class="h3 font-weight-normal text-uppercase m-0">add to wishlist</p>
+        :class="`ActionButton col-6 col-md-4 border d-flex justify-content-center align-items-center ${current_variant_id == 'null' ? 'disabled' : ''}`" :disabled="current_variant_id == 'null'">
+          <p class="font-weight-normal text-uppercase m-0">add to wishlist</p>
         </button>
       </div>
       {% comment %} product description {% endcomment %}
-      <h2 class="h1 mt-5 text-white text-uppercase font-weight-light">description</h2>
-      <p class="fs-3 font-weight-light text-white text-justify">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut fringilla accumsan nisi interdum finibus. Suspendisse cursus nisi ut consequat cursus. Maecenas pellentesque dui eget orci vulputate, a mattis nunc lobortis. Donec consequat diam ac lacus ultrices, a vestibulum ligula condimentum. Mauris dictum, ex a laoreet dapibus, tellus quam luctus metus, sit amet porta justo ante ac orci.</p>
-    
+      <h1 class="ProductPage-content__info-subtitle mt-5 text-white text-uppercase font-weight-light">description</h1>
+      <p class="ProductPage-content__info-description font-weight-light text-white text-justify">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut fringilla accumsan nisi interdum finibus. Suspendisse cursus nisi ut consequat cursus. Maecenas pellentesque dui eget orci vulputate, a mattis nunc lobortis. Donec consequat diam ac lacus ultrices, a vestibulum ligula condimentum.</p>
     </div>
   </div>
+
+  <transition name="fade">
+    <div v-if="addednotification" class="AddedNotification">
+    <i class="far fa-check-circle text-white"></i>
+    </div>
+  </transition>
 </div>
 
 <script>
@@ -61,6 +65,7 @@ const { createApp, ref, computed, watch, onMounted, reactive} = Vue;
 
 const ProductPage = {
   setup() {
+    let addednotification = ref(false);
     let current_variant_quantity = ref(1);
     let out_of_stock = computed(() => {
       return current_variant_object.value.inventory_quantity == 0;
@@ -121,7 +126,7 @@ const ProductPage = {
     }
     const AddToCart = () => {
       if(current_variant_id.value == 'null') return;
-
+      addednotification.value = true;
       axios.post('/cart/add.js', {
         items: [
           {
@@ -131,7 +136,7 @@ const ProductPage = {
         ]
       })
         .then(function (response) {
-          console.log(response);
+          addednotification.value = false;
         })
         .catch(function (error) {
           console.log(error);
@@ -149,7 +154,8 @@ const ProductPage = {
       current_variant_quantity,
       current_variant_object,
       out_of_stock,
-      variant_not_available
+      variant_not_available,
+      addednotification
     }
   },
 

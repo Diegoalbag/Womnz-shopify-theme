@@ -25,8 +25,14 @@
     @include respond(phone){
         height: 75rem;
         width: 48rem;       
-        max-height: 500px;  
+        max-height: 350px;    
         max-width: 320px;
+        h2{
+            font-size: 4rem;    
+        }
+        p{
+            font-size: 3rem;
+        }
     } 
     &-image{
         img{

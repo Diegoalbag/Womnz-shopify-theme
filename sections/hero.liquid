@@ -37,7 +37,7 @@
                         <h1 class="carousel-content_title display-1 text-uppercase font-weight-normal text-white my-5" >{{block.settings.hero_title}}</h1>
                     {% endunless %}
                     {% if block.settings.button == true and block.settings.linked_collection != blank%}
-                        {% include 'button' %}
+                        {% include 'button', link: block.settings.linked_collection.url %}
                     {% endif %}
                     </div>
                 </div>
@@ -61,7 +61,7 @@
                     {%- endcase -%}
                     ">
                     {% if block.settings.button == true and block.settings.linked_collection != blank%}
-                        {% include 'button' %}
+                        {% include 'button', link: block.settings.linked_collection.url %}
                     {% endif %}
                     </div>
                 </div>

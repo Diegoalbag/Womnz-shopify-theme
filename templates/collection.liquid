@@ -1,4 +1,26 @@
-{% paginate collection.products by 2 %}
+<div id="CollectionPage" class="CollectionPage">
+  <div class="CollectionPage-content container-fluid row d-flex m-0">
+        <div v-for="(product, index) in products" :key="index" class="CollectionPage-content_column col-6 col-md-4 col-lg-3 col-xxl-2 d-flex justify-content-center">
+            <div @click="goTo(product.url)" class="Product d-flex flex-column justify-content-start">
+                <figure class="Product-image h-75">
+                    <img class="h-100 w-100 shadow" :src="product.images[0]"/>
+                </figure>
+                <h2 v-html="product.title" class="text-white"></h2>
+                <p v-html="product.minPrice" class="text-black h3 text-muted"></p>
+            </div>
+        </div>
+        <div v-for="(product, index) in products" :key="index" class="CollectionPage-content_column col-6 col-md-4 col-lg-3 col-xxl-2 d-flex justify-content-center">
+            <div @click="goTo(product.url)" class="Product d-flex flex-column justify-content-start">
+                <figure class="Product-image h-75">
+                    <img class="h-100 w-100 shadow" :src="product.images[0]"/>
+                </figure>
+                <h2 v-html="product.title" class="text-white"></h2>
+                <p v-html="product.minPrice" class="text-black h3 text-muted"></p>
+            </div>
+        </div>
+  </div>
+</div>
+{% comment %} {% paginate collection.products by 2 %}
   <h1>{{ collection.title }}</h1>
   {% for product in collection.products %}
     <div>
@@ -15,4 +37,39 @@
   {% if paginate.pages > 1 %}
     {{ paginate | default_pagination }}
   {% endif %}
-{% endpaginate %}
+{% endpaginate %} {% endcomment %}
+
+<script>
+const { createApp, ref, computed, watch, onMounted, reactive} = Vue;
+const CollectionPage = {
+  setup() {
+        let products = ref(
+            [
+                {% for product in collection.products %}
+                    {
+                        title: '{{product.title}}',
+                        id: {{product.id}}, 
+                        images: [
+                            {% for image in product.images %}
+                            '{{ image.src | product_img_url: 'medium', scale: 2}}',
+                            {% endfor %}
+                        ],
+                        minPrice: '{{product.price_min | money}}',
+                        url: '{{product.url}}',
+                    },
+                {% endfor %}
+            ]
+        );
+
+        goTo = (productUrl) => {
+            window.location.href = productUrl;
+        }
+
+        return{
+            products,
+            goTo
+        }
+  }
+}
+createApp(CollectionPage).mount('#CollectionPage');
+</script>

@@ -1,10 +1,35 @@
 .ProductPage{
     min-height: 100vh;  
     &-content{
-        padding-top: 11rem;
+        padding-top: 17rem;
         min-height: 100vh; 
         &__info{
-            &--options{
+            &-title{
+                font-size: 5rem;    
+                font-weight: 300;
+                @include respond(phone){
+                    font-size: 8rem;    
+                }
+            }
+            &-subtitle{
+                font-size: 3rem;    
+                @include respond(phone){
+                    font-size: 5rem;    
+                }
+            }
+            &-price{
+                font-size: 3rem;        
+                @include respond(phone){
+                    font-size: 5rem;    
+                }
+            }
+            &-description{
+                font-size: 2rem;        
+                @include respond(phone){
+                    font-size: 4rem;        
+                }
+            }
+            &-options{
                 button{
                     height: 4rem;
                     min-width: 4rem;
@@ -16,14 +41,24 @@
                     &:focus{
                         outline: none;  
                     }
+                    @include respond(phone){
+                        height: 8rem;
+                        min-width: 4rem;
+                        padding: 0 2rem;   
+                        p{
+                            font-size: 5rem;
+                            font-weight: 300;
+                        }
+                    }
                 }
             }
-            &--quantity{
-                height: 5rem;
-                min-width: 4rem;
+            &-quantity{
+                height: 50px;     
+                min-width: 130px;
                 width: min-content; 
                 padding: 0 1rem;
                 background: transparent;
+                font-size: 20px;            
                 input{
                     outline: none;
                     border: none;
@@ -36,6 +71,15 @@
                 }
                 i{
                     cursor: pointer;
+    
+                }
+            }
+            &-actions{
+                span, i{
+                    font-size: 2rem;
+                    @include respond(phone){
+                        font-size: 3rem;    
+                    }
                 }
             }
         }
@@ -49,7 +93,8 @@
     background: transparent;
     p{
         color: white;
-        white-space: nowrap;    
+        white-space: nowrap; 
+        font-size: 2rem;   
     }
     &:focus{
         outline: none;  
@@ -58,6 +103,12 @@
         background: white;
         p{
             color: black;   
+        }
+    }
+    @include respond(phone){
+        height: 10rem;
+        p{
+            font-size: 4rem;
         }
     }
 }
@@ -82,3 +133,27 @@
         }
     }
 }
+
+.AddedNotification{
+    position: absolute;
+    top: 50%; 
+    left: 50%; 
+    transform: translate(-50%, -50%);     
+    height: 35rem;  
+    width: 30rem;
+    background-color: rgb(0, 182, 0); 
+    border-radius: 1rem;  
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    i{
+        font-size: 15rem;
+    }  
+}
+
+.fade-enter-active, .fade-leave-active {
+    transition: opacity .2s
+  }
+  .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+    opacity: 0
+  }

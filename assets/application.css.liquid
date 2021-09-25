@@ -41,7 +41,7 @@ ORDER: Base + typography > general layout + grid > page layout > components
       font-size: 4rem; }
       @media only screen and (max-width: 56.25em) {
         .navbar-icons i:last-child {
-          font-size: 9rem; } }
+          font-size: 7rem; } }
 
 .carousel-content {
   height: 100%;
@@ -115,8 +115,12 @@ ORDER: Base + typography > general layout + grid > page layout > components
     .Product {
       height: 75rem;
       width: 48rem;
-      max-height: 500px;
-      max-width: 320px; } }
+      max-height: 350px;
+      max-width: 320px; }
+      .Product h2 {
+        font-size: 4rem; }
+      .Product p {
+        font-size: 3rem; } }
   .Product-image img {
     border-radius: .5rem;
     object-fit: cover; }
@@ -126,6 +130,14 @@ ORDER: Base + typography > general layout + grid > page layout > components
   .CartPage-content {
     padding: 11rem 5rem 5rem 5rem;
     min-height: 100vh; }
+    @media only screen and (max-width: 56.25em) {
+      .CartPage-content {
+        padding: 17rem 5rem 5rem 5rem; } }
+    @media only screen and (max-width: 37.5em) {
+      .CartPage-content_info-subtotal h1, .CartPage-content_info-discount h1, .CartPage-content_info-total h1 {
+        font-size: 6rem; }
+      .CartPage-content_info-subtotal h4, .CartPage-content_info-discount h4, .CartPage-content_info-total h4 {
+        font-size: 4rem; } }
 
 .CartItem {
   height: max-content;
@@ -137,12 +149,46 @@ ORDER: Base + typography > general layout + grid > page layout > components
       height: 100%;
       width: 100%;
       object-fit: cover; }
+    @media only screen and (max-width: 37.5em) {
+      .CartItem-image {
+        height: 25rem;
+        width: 20rem; } }
+  @media only screen and (max-width: 37.5em) {
+    .CartItem-info_title {
+      font-size: 5rem; } }
+  @media only screen and (max-width: 37.5em) {
+    .CartItem-info_variant {
+      font-size: 4rem; } }
+  .CartItem-info_totalprice {
+    white-space: nowrap; }
+    @media only screen and (max-width: 37.5em) {
+      .CartItem-info_totalprice {
+        font-size: 4rem; } }
+  .CartItem-info_finalprice {
+    position: relative;
+    width: min-content;
+    white-space: nowrap; }
+    .CartItem-info_finalprice::after {
+      content: '';
+      position: absolute;
+      top: 45%;
+      left: 0;
+      height: 2px;
+      width: 100%;
+      background-color: #6c757d; }
+    @media only screen and (max-width: 37.5em) {
+      .CartItem-info_finalprice {
+        font-size: 3rem; } }
+  @media only screen and (max-width: 37.5em) {
+    .CartItem-info_discountedprice {
+      font-size: 3rem; } }
   .CartItem-info_quantity {
-    height: 5rem;
-    min-width: 4rem;
+    height: 50px;
+    min-width: 130px;
     width: min-content;
     padding: 0 1rem;
-    background: transparent; }
+    background: transparent;
+    font-size: 20px; }
     .CartItem-info_quantity input {
       outline: none;
       border: none;
@@ -153,6 +199,55 @@ ORDER: Base + typography > general layout + grid > page layout > components
       display: none; }
     .CartItem-info_quantity i {
       cursor: pointer; }
+
+.Checkout-button {
+  cursor: pointer;
+  text-transform: uppercase;
+  text-decoration: none;
+  text-align: center;
+  font-size: 3rem;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  color: black;
+  padding: 1rem 3rem;
+  border: .3rem white solid;
+  transition: all .2s;
+  white-space: nowrap;
+  width: 100%;
+  height: 6rem;
+  box-shadow: 0 0.5rem 0.5rem rgba(0, 0, 0, 0.4); }
+  @media only screen and (max-width: 37.5em) {
+    .Checkout-button {
+      padding: 2rem 1rem; } }
+  @media only screen and (max-width: 37.5em) {
+    .Checkout-button {
+      padding: 2rem 1rem;
+      height: 15rem;
+      font-size: 5rem; } }
+  .Checkout-button:hover {
+    background-color: white;
+    color: black;
+    transform: translateY(-7px);
+    box-shadow: 0 1rem 1rem rgba(0, 0, 0, 0.4);
+    text-decoration: none; }
+    @media only screen and (max-width: 75em) {
+      .Checkout-button:hover {
+        transform: none;
+        box-shadow: 0 0.5rem 0.5rem rgba(0, 0, 0, 0.4); } }
+  .Checkout-button:active {
+    transform: translateY(-8px);
+    box-shadow: 0 0.5rem 2rem rgba(0, 0, 0, 0.4); }
+  .Checkout-button::after {
+    content: "";
+    display: inline-block;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1; }
 
 .Button {
   cursor: pointer;
@@ -201,33 +296,68 @@ ORDER: Base + typography > general layout + grid > page layout > components
 .ProductPage {
   min-height: 100vh; }
   .ProductPage-content {
-    padding-top: 11rem;
+    padding-top: 17rem;
     min-height: 100vh; }
-    .ProductPage-content__info--options button {
+    .ProductPage-content__info-title {
+      font-size: 5rem;
+      font-weight: 300; }
+      @media only screen and (max-width: 37.5em) {
+        .ProductPage-content__info-title {
+          font-size: 8rem; } }
+    .ProductPage-content__info-subtitle {
+      font-size: 3rem; }
+      @media only screen and (max-width: 37.5em) {
+        .ProductPage-content__info-subtitle {
+          font-size: 5rem; } }
+    .ProductPage-content__info-price {
+      font-size: 3rem; }
+      @media only screen and (max-width: 37.5em) {
+        .ProductPage-content__info-price {
+          font-size: 5rem; } }
+    .ProductPage-content__info-description {
+      font-size: 2rem; }
+      @media only screen and (max-width: 37.5em) {
+        .ProductPage-content__info-description {
+          font-size: 4rem; } }
+    .ProductPage-content__info-options button {
       height: 4rem;
       min-width: 4rem;
       padding: 0 1rem;
       background: transparent; }
-      .ProductPage-content__info--options button p {
+      .ProductPage-content__info-options button p {
         color: white; }
-      .ProductPage-content__info--options button:focus {
+      .ProductPage-content__info-options button:focus {
         outline: none; }
-    .ProductPage-content__info--quantity {
-      height: 5rem;
-      min-width: 4rem;
+      @media only screen and (max-width: 37.5em) {
+        .ProductPage-content__info-options button {
+          height: 8rem;
+          min-width: 4rem;
+          padding: 0 2rem; }
+          .ProductPage-content__info-options button p {
+            font-size: 5rem;
+            font-weight: 300; } }
+    .ProductPage-content__info-quantity {
+      height: 50px;
+      min-width: 130px;
       width: min-content;
       padding: 0 1rem;
-      background: transparent; }
-      .ProductPage-content__info--quantity input {
+      background: transparent;
+      font-size: 20px; }
+      .ProductPage-content__info-quantity input {
         outline: none;
         border: none;
         appearance: none;
         width: min-content; }
-      .ProductPage-content__info--quantity input[type=number]::-webkit-inner-spin-button,
-      .ProductPage-content__info--quantity input[type=number]::-webkit-outer-spin-button {
+      .ProductPage-content__info-quantity input[type=number]::-webkit-inner-spin-button,
+      .ProductPage-content__info-quantity input[type=number]::-webkit-outer-spin-button {
         display: none; }
-      .ProductPage-content__info--quantity i {
+      .ProductPage-content__info-quantity i {
         cursor: pointer; }
+    .ProductPage-content__info-actions span, .ProductPage-content__info-actions i {
+      font-size: 2rem; }
+      @media only screen and (max-width: 37.5em) {
+        .ProductPage-content__info-actions span, .ProductPage-content__info-actions i {
+          font-size: 3rem; } }
 
 .ActionButton {
   height: 5rem;
@@ -236,13 +366,19 @@ ORDER: Base + typography > general layout + grid > page layout > components
   background: transparent; }
   .ActionButton p {
     color: white;
-    white-space: nowrap; }
+    white-space: nowrap;
+    font-size: 2rem; }
   .ActionButton:focus {
     outline: none; }
   .ActionButton:active {
     background: white; }
     .ActionButton:active p {
       color: black; }
+  @media only screen and (max-width: 37.5em) {
+    .ActionButton {
+      height: 10rem; }
+      .ActionButton p {
+        font-size: 4rem; } }
 
 .selected {
   background-color: white !important; }
@@ -258,6 +394,38 @@ ORDER: Base + typography > general layout + grid > page layout > components
     background: transparent !important; }
     .disabled:active p {
       color: grey !important; }
+
+.AddedNotification {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 35rem;
+  width: 30rem;
+  background-color: #00b600;
+  border-radius: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+  .AddedNotification i {
+    font-size: 15rem; }
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .2s; }
+
+.fade-enter, .fade-leave-to {
+  opacity: 0; }
+
+.CollectionPage {
+  min-height: 100vh; }
+  .CollectionPage-content {
+    padding: 11rem 5rem 5rem 5rem;
+    height: min-content; }
+    @media only screen and (max-width: 56.25em) {
+      .CollectionPage-content {
+        padding: 17rem 5rem 5rem 5rem; } }
+    .CollectionPage-content_column {
+      height: min-content; }
 
 *,
 *::before,

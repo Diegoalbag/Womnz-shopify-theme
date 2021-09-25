@@ -1,21 +1,24 @@
 <div id="CartPage" class="CartPage">
   <div class="CartPage-content row container-fluid">
-    <div class="CartPage-content_items col-12 col-md-6 ">
+
+    <div class="CartPage-content_items col-12 col-md-7 ">
       <template v-if="cart.items">
-        <div v-for="(item, index) in cart.items" :key="index" class="CartItem d-flex gap-5">
+        <div v-for="(item, index) in cart.items" :key="index" class="CartItem d-flex align-items-center gap-5">
           <figure class="CartItem-image my-2">
             <img :src="item.image" class="rounded-3 shadow"/>
           </figure>
           <div class="CartItem-info py-3 d-flex flex-column">
             <span>
-              <h1 class="text-white fw-normal d-inline-block me-3" v-html="item.product_title"></h1>
-              <span class="text-muted text-uppercase h2" v-html="item.variant_title"></span>
+              <h1 class="CartItem-info_title text-white fw-normal d-inline-block me-3" v-html="item.product_title"></h1>
+              <span class="CartItem-info_variant text-muted text-uppercase h2" v-html="item.variant_title"></span>
+              {% comment %} <h3 class="CartItem-info_totalprice text-white d-inline ms-3" v-html="item.formatted_line_price"></h3> {% endcomment %}
             </span>
-            <h3 class="text-muted fw-normal" v-html="item.price"></h3>
+            <h3 v-if="item.discounts.length" class="CartItem-info_finalprice text-muted fw-normal" v-html="item.formatted_final_price"></h3>
+            <h3 class="CartItem-info_discountedprice text-white fw-normal" v-html="item.formatted_discounted_price"></h3>
             <div class="CartItem-info_quantity border d-flex justify-content-center align-items-center mt-5">
-              <i @click="changeCart(item.variant_id, item.quantity - 1)" class="fas fa-minus fs-2 text-white"></i>
-              <span class="fs-2 text-white text-center mx-5" v-html="item.quantity"></span>
-              <i @click="changeCart(item.variant_id, item.quantity + 1)" class="fas fa-plus fs-2 text-white"></i>
+              <i @click="changeCart(item.variant_id, item.quantity - 1)" class="fas fa-minus me-3 text-white"></i>
+              <span class="text-white text-center mx-5" v-html="item.quantity"></span>
+              <i @click="changeCart(item.variant_id, item.quantity + 1)" class="fas fa-plus ms-3 text-white"></i>
             </div>
           </div>
         </div>
@@ -24,8 +27,23 @@
         <h1>no items in cart</h1>
       </template>
     </div>
-    <div class="CartPage-content_info col-12 col-md-6 border border-danger">
+
+    <div class="CartPage-content_info mt-5 col-12 col-md-5">
+      <div class="CartPage-content_info-subtotal d-flex align-items-center justify-content-between">
+      <h1 class="text-white m-0 text-muted">Subtotal</h1>
+      <h4 class="text-white m-0" v-html="cart.formatted_subtotal_price"></h4>
+      </div>
+      <div class="CartPage-content_info-discount d-flex align-items-center justify-content-between">
+      <h1 class="text-white m-0 text-muted">Discount</h1>
+      <h4 class="text-danger m-0" v-html="cart.formatted_total_discount"></h4>
+      </div>
+      <div class="CartPage-content_info-total mt-5 d-flex align-items-center justify-content-between">
+      <h1 class="text-white m-0 text-muted">Cart Total</h1>
+      <h4 class="text-white m-0" v-html="cart.formatted_total_price"></h4>
+      </div>
+      <a href="#" class="Checkout-button mt-5">Checkout</a>
     </div>
+
   </div>
 </div>
 
@@ -41,8 +59,21 @@ const CartPage = {
       axios.get('/cart.js')
       .then(response => {
         cart.value = response.data;
+        formatPrice();
       });
     })();
+
+    formatPrice = () => {
+      cart.value.items.forEach(item => {
+        item.formatted_line_price = cart.value.currency + ' ' + Shopify.formatMoney(item.line_price);
+        item.formatted_final_price = cart.value.currency + ' ' + Shopify.formatMoney(item.final_price);
+        item.formatted_discounted_price = cart.value.currency + ' ' + Shopify.formatMoney(item.discounted_price);
+      });
+      cart.value.formatted_total_price = cart.value.currency + ' ' + Shopify.formatMoney(cart.value.total_price);
+      cart.value.formatted_total_discount = '-- ' +  cart.value.currency + ' ' + Shopify.formatMoney(cart.value.total_discount);
+      cart.value.formatted_subtotal_price = cart.value.currency + ' ' + Shopify.formatMoney(cart.value.items_subtotal_price);
+    };
+
 
     changeCart = (id, quantity) => {
       console.log(typeof(id), quantity)
@@ -51,6 +82,7 @@ const CartPage = {
       )
       .then(response => {
         cart.value = response.data;
+        formatPrice();
       })
       .catch(error => {
         console.log(error);
