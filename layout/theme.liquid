@@ -35,6 +35,9 @@
   {% endif %}
 
   <main role="main">
+    {% if content_for_header contains 'adminBar' %}
+      <a href="https://old.hedgeapple.com/catalog/{{ product.handle }}">View Stock Information</a>
+    {% endif %}
     {{ content_for_layout }}
   </main>
 </body>
